@@ -1,26 +1,31 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Todo.Web.Models;
+using TodoApp.Web.Data;
 
 namespace Todo.Web.Controllers;
 
-public class HomeController : Controller
+public class TodosController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ITodoService _todoService;
+    private readonly ILogger<TodosController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    public TodosController(ILogger<TodosController> logger, ITodoService todoService)
     {
         _logger = logger;
+        _todoService = todoService;
     }
 
     public IActionResult Index()
     {
-        return View();
+        return View(_todoService.GetAll());
     }
 
-    public IActionResult Privacy()
+    public IActionResult Create(TodoItem item)
     {
-        return View();
+        _todoService.Add(item);
+
+        return RedirectToAction(nameof(Index));
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
