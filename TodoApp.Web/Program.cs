@@ -4,7 +4,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton<ITodoService, InMemoryTodoService>();
+builder.Services.AddSqlServer<TodosDbContext>(builder.Configuration.GetConnectionString("TodosDb"));
+builder.Services.AddScoped<ITodoService, SqlTodoService>();
 
 var app = builder.Build();
 

@@ -4,7 +4,7 @@ public interface ITodoService
 {
     void Add(TodoItem item);
     void Update(TodoItem item);
-    void Delete(Guid id);
-    void MarkComplete(Guid id);
+    void Delete(long id);
+    void MarkComplete(long id);
     IEnumerable<TodoItem> GetAll();
 }
